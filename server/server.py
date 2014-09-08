@@ -30,7 +30,8 @@ try:
 	sent_client_info = False
 	while (True):
 		for line in [line for line in recv().split("\n") if line != ""]:
-			print(line)
+			if (cfg["debug"]):
+				print(line)
 			msg = json.loads(line)
 			if (msg["type"] == "ping"):
 				pong(msg["id"])
@@ -38,12 +39,13 @@ try:
 					send({
 						"type": "client info",
 						"client type": "server"})
+					print("Requesting domains: %s" % ', '.join([("'%s'" % domain[0]) for domain in cfg["domains"]]))
 					send({
 						"type": "domain request",
-						"domains": [
-							["google.com", "64.233.185.139"],
-							["youtube.com", "64.233.185.93"]]})
+						"domains": cfg["domains"]})
 					sent_client_info = True
+			elif (msg["type"] == "status"):
+				print("STATUS %d: %s" % (msg["code"], msg["description"]))
 finally:
 	sock.close()
 

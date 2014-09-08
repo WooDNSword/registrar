@@ -34,7 +34,7 @@ def recv(conn):
 			return data
 
 def handleConnection(conn, addr):
-	running = True
+	running = [True]
 	def ping(ping_pending):
 		if (ping_pending[0]):
 			raise IOError("ping timeout")
@@ -42,20 +42,25 @@ def handleConnection(conn, addr):
 		identifier = random.randint(10000, 99999)
 		send(conn, {"type": "ping", "id": identifier})
 		ping_pending[0] = identifier
-	def pingLoop(ping_pending):
-		while (running):
-			ping(ping_pending)
-			time.sleep(180)
+	def pingLoop(running, ping_pending):
+		while (running[0]):
+			try:
+				ping(ping_pending)
+			except IOError as e:
+				print("IOError:", e)
+				running[0] = False
+				break
+			time.sleep(cfg["ping interval"])
 	try:
 		print("Connection from ", addr)
 		ping_pending = [False] # Must be mutable
-		print(ping_pending)
-		ping_thread = threading.Thread(target=pingLoop, args=[ping_pending])
+		ping_thread = threading.Thread(target=pingLoop, args=(running, ping_pending))
 		ping_thread.start()
 		client_type = ""
-		while (running):
+		while (running[0]):
 			for line in [line for line in recv(conn).split("\n") if line != ""]:
-				print(line)
+				if (cfg["debug"]):
+					print(line)
 				msg = json.loads(line)
 				if (msg["type"] == "client info"):
 					client_type = msg["client type"]
@@ -64,19 +69,21 @@ def handleConnection(conn, addr):
 					if (client_type == "client"):
 						clients[conn] = []
 				elif (msg["type"] == "pong"):
-					pass
 					if (ping_pending[0] and ping_pending[0] == msg["id"]):
 						ping_pending[0] = False
+				elif (msg["type"] == "status"):
+					print("STATUS %d: %s" % (msg["code"], msg["description"]))
 				elif (msg["type"] == "quit"):
-					running = False
+					running[0] = False
 				elif (client_type == "server"):
 					if (msg["type"] == "domain request"):
 						for domain in msg["domains"]:
 							(domain_name, domain_addr) = domain
 							servers[conn].update({domain_name})
 							domains[domain_name] = {"addr": domain_addr, "owner": addr}
-						print("Domains: %s" % repr(domains))
-						print("Servers: %s" % repr(servers))
+						if (cfg["debug"]):
+							print("Domains: %s" % repr(domains))
+							print("Servers: %s" % repr(servers))
 				elif (client_type == "client"):
 					pass
 	finally:
