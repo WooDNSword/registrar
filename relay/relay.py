@@ -42,7 +42,10 @@ def recv(conn):
 
 def add_domains(conn, owner, domain_list, overwrite):
 	if (owner in cfg["blacklist"]["owners"]):
-		send(conn, {"type": "status", "code": 201, "description": "Owner %s is blacklisted." % owner})
+		if (conn == "localhost"):
+			print_status(201, "Owner %s is blacklisted." % owner)
+		else:
+			send(conn, {"type": "status", "code": 201, "description": "Owner %s is blacklisted." % owner})
 	else:
 		for domain in domain_list:
 			result_code = 0
