@@ -5,7 +5,6 @@
 
 import json
 import random
-import re
 import socket
 import threading
 import time
@@ -119,7 +118,11 @@ def handleConnection(conn, addr):
 					if (msg["type"] == "domain request"):
 						add_domains(conn, addr, msg["domains"], False)
 				elif (client_type == "client"):
-					pass
+					if (msg["type"] == "domain lookup"):
+						if (msg["domain"] in domains):
+							send(conn, {"type": "host response", "address": domains[msg["domain"]]["addr"]})
+						else:
+							send(conn, {"type": "status", "code": 401, "description": "Domain '%s' lookup failed." % msg["domain"]})
 	finally:
 		ping_thread.join()
 		if conn in domains:
