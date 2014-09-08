@@ -1,3 +1,3 @@
 LeanDNS
 -------
-A free, floating domain name service
+A free, floating domain name system
