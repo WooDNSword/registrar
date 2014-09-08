@@ -19,9 +19,20 @@ sock.bind(cfg["host"])
 sock.listen(1)
 
 domains = {}
-servers = {}
+servers = {"localhost": set()}
 clients = {}
 threads = {}
+
+def add_domains(conn, owner, domain_list):
+	for domain in domain_list:
+		(domain_name, domain_addr) = domain
+		servers[conn].update({domain_name})
+		domains[domain_name] = {"addr": domain_addr, "owner": owner}
+	if (cfg["debug"]):
+		print("Domains: %s" % repr(domains))
+		print("Servers: %s" % repr(servers))
+
+add_domains("localhost", "localhost", cfg["registered domains"])
 
 def send(conn, data):
 	conn.send((json.dumps(data) + "\n").encode("utf-8"))
@@ -77,13 +88,7 @@ def handleConnection(conn, addr):
 					running[0] = False
 				elif (client_type == "server"):
 					if (msg["type"] == "domain request"):
-						for domain in msg["domains"]:
-							(domain_name, domain_addr) = domain
-							servers[conn].update({domain_name})
-							domains[domain_name] = {"addr": domain_addr, "owner": addr}
-						if (cfg["debug"]):
-							print("Domains: %s" % repr(domains))
-							print("Servers: %s" % repr(servers))
+						add_domains(conn, addr, msg["domains"])
 				elif (client_type == "client"):
 					pass
 	finally:
