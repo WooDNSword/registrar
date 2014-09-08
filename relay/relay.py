@@ -42,20 +42,22 @@ def recv(conn):
 def add_domains(conn, owner, domain_list, overwrite):
 	if (owner in cfg["blacklist"]["owners"]):
 		if (conn == "localhost"):
-			print_status(201, "Owner %s is blacklisted." % owner)
+			print_status(201, "Owner '%s' is blacklisted." % owner)
 		else:
-			send(conn, {"type": "status", "code": 201, "description": "Owner %s is blacklisted." % owner})
+			send(conn, {"type": "status", "code": 201, "description": "Owner '%s' is blacklisted." % owner})
 	else:
 		for domain in domain_list:
 			result_code = 0
 			result_text = ""
 			(domain_name, domain_addr) = domain
+			if (domain_addr == "localhost"):
+				domain_addr = owner
 			if (domain_name in cfg["blacklist"]["domains"]):
 				result_code = 202
-				result_text = "Domain name %s is blacklisted." % domain_name
+				result_text = "Domain name '%s' is blacklisted." % domain_name
 			elif (domain_addr in cfg["blacklist"]["addresses"]):
 				result_code = 203
-				result_text = "Address %s is blacklisted." % domain_addr
+				result_text = "Address '%s' is blacklisted." % domain_addr
 			elif (domain_name not in domains or overwrite):
 				servers[conn].update({domain_name})
 				domains[domain_name] = {"addr": domain_addr, "owner": owner}
@@ -63,7 +65,7 @@ def add_domains(conn, owner, domain_list, overwrite):
 				result_text = "Domain name '%s' -> '%s' successfully claimed." % (domain_name, domain_addr)
 			else:
 				result_code = 301
-				result_text = "Domain name %s is already taken." % domain_name
+				result_text = "Domain name '%s' is already taken." % domain_name
 			if (conn == "localhost"):
 				print_status(result_code, result_text)
 			else:
@@ -116,7 +118,7 @@ def handleConnection(conn, addr):
 					running[0] = False
 				elif (client_type == "server"):
 					if (msg["type"] == "domain request"):
-						add_domains(conn, addr, msg["domains"], False)
+						add_domains(conn, addr[0], msg["domains"], False)
 				elif (client_type == "client"):
 					if (msg["type"] == "domain lookup"):
 						if (msg["domain"] in domains):
