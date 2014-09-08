@@ -5,6 +5,7 @@
 
 import json
 import random
+import re
 import socket
 import threading
 import time
@@ -23,19 +24,14 @@ servers = {"localhost": set()}
 clients = {}
 threads = {}
 
-def add_domains(conn, owner, domain_list):
-	for domain in domain_list:
-		(domain_name, domain_addr) = domain
-		servers[conn].update({domain_name})
-		domains[domain_name] = {"addr": domain_addr, "owner": owner}
-	if (cfg["debug"]):
-		print("Domains: %s" % repr(domains))
-		print("Servers: %s" % repr(servers))
-
-add_domains("localhost", "localhost", cfg["registered domains"])
+def print_status(code, message):
+	print("STATUS %d: %s" % (code, message))
 
 def send(conn, data):
-	conn.send((json.dumps(data) + "\n").encode("utf-8"))
+	msg = json.dumps(data) + "\n"
+	conn.send(msg.encode("utf-8"))
+	if (cfg["debug"]):
+		print("Sending %s to" % msg, conn)
 
 def recv(conn):
 	data = ""
@@ -43,6 +39,36 @@ def recv(conn):
 		data += conn.recv(512).decode("utf-8")
 		if (data.endswith("\n")):
 			return data
+
+def add_domains(conn, owner, domain_list, overwrite):
+	if (owner in cfg["blacklist"]["owners"]):
+		send(conn, {"type": "status", "code": 201, "description": "Owner %s is blacklisted." % owner})
+	else:
+		for domain in domain_list:
+			result_code = 0
+			result_text = ""
+			(domain_name, domain_addr) = domain
+			if (domain_name in cfg["blacklist"]["domains"]):
+				result_code = 202
+				result_text = "Domain name %s is blacklisted." % domain_name
+			elif (domain_addr in cfg["blacklist"]["addresses"]):
+				result_code = 203
+				result_text = "Address %s is blacklisted." % domain_addr
+			elif (domain_name not in domains or overwrite):
+				servers[conn].update({domain_name})
+				domains[domain_name] = {"addr": domain_addr, "owner": owner}
+				result_code = 100
+				result_text = "Domain name '%s' -> '%s' successfully claimed." % (domain_name, domain_addr)
+			else:
+				result_code = 301
+				result_text = "Domain name %s is already taken." % domain_name
+			if (conn == "localhost"):
+				print_status(result_code, result_text)
+			else:
+				send(conn, {"type": "status", "code": result_code, "description": result_text})
+		if (cfg["debug"]):
+			print("Domains: %s" % repr(domains))
+			print("Servers: %s" % repr(servers))
 
 def handleConnection(conn, addr):
 	running = [True]
@@ -83,12 +109,12 @@ def handleConnection(conn, addr):
 					if (ping_pending[0] and ping_pending[0] == msg["id"]):
 						ping_pending[0] = False
 				elif (msg["type"] == "status"):
-					print("STATUS %d: %s" % (msg["code"], msg["description"]))
+					print_status(msg["code"], msg["description"])
 				elif (msg["type"] == "quit"):
 					running[0] = False
 				elif (client_type == "server"):
 					if (msg["type"] == "domain request"):
-						add_domains(conn, addr, msg["domains"])
+						add_domains(conn, addr, msg["domains"], False)
 				elif (client_type == "client"):
 					pass
 	finally:
@@ -100,6 +126,8 @@ def handleConnection(conn, addr):
 		if conn in clients:
 			del clients[conn]
 		conn.close()
+
+add_domains("localhost", "localhost", cfg["registered domains"], True)
 
 print("Listening for connections...")
 try:

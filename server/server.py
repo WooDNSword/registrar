@@ -13,6 +13,9 @@ f_cfg.close()
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect(cfg["relay"])
 
+def print_status(code, message):
+	print("STATUS %d: %s" % (code, message))
+
 def send(data):
 	sock.send((json.dumps(data) + "\n").encode("utf-8"))
 
@@ -45,7 +48,8 @@ try:
 						"domains": cfg["domains"]})
 					sent_client_info = True
 			elif (msg["type"] == "status"):
-				print("STATUS %d: %s" % (msg["code"], msg["description"]))
+				print_status(msg["code"], msg["description"])
 finally:
+	send({"type": "quit"})
 	sock.close()
 
