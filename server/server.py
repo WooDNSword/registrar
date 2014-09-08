@@ -6,11 +6,12 @@
 import json
 import socket
 
+f_cfg = open("server.cfg")
+cfg = eval(f_cfg.read())
+f_cfg.close()
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-host = ("localhost", 55555)
-
-sock.connect(host)
+sock.connect(cfg["relay"])
 
 def send(data):
 	sock.send((json.dumps(data) + "\n").encode("utf-8"))

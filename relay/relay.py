@@ -9,12 +9,13 @@ import socket
 import threading
 import time
 
+f_cfg = open("relay.cfg")
+cfg = eval(f_cfg.read())
+f_cfg.close()
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-host = ("localhost", 55555)
-
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-sock.bind(host)
+sock.bind(cfg["host"])
 sock.listen(1)
 
 domains = {}
