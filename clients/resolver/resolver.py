@@ -10,7 +10,7 @@ import sys
 domain_to_lookup = sys.argv[1]
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(("localhost", 55555))
+sock.connect(("samuraimanpurse.com", 55555))
 
 def print_status(code, message):
 	print("STATUS %d: %s" % (code, message))
