@@ -126,14 +126,14 @@ def handleConnection(conn, addr):
 						else:
 							send(conn, {"type": "status", "code": 401, "description": "Domain '%s' lookup failed." % msg["domain"]})
 	finally:
-		ping_thread.join()
-		if conn in servers:
+		if conn in servers.keys():
 			for domain in servers[conn]:
-				if domain in domains:
+				if domain in domains.keys():
 					del domains[domain]
 			del servers[conn]
 		if conn in clients:
 			del clients[conn]
+		ping_thread.join()
 		conn.close()
 
 add_domains("localhost", "localhost", cfg["registered domains"], True)
