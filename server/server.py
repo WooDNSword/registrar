@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# LeanDNS Server
+# WooDNSword Server
 # server.py
 
 import json

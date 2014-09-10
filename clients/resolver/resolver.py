@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# LeanDNS Command-line Resolver
+# WooDNSword Command-line Resolver
 # resolver.py
 
 import json

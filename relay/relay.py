@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# LeanDNS Relay
+# WooDNSword Relay
 # relay.py
 
 import json
