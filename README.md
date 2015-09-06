@@ -9,7 +9,7 @@ The WooDNSword backend consists of two separate programs:
 + The **relay** is a daemon that clients and servers connect to, and handles the
   administration, registration, deregistration, and lookups of all domains.
   This program is meant to always be running, and ties the WooDNSword system
-  together. Outside of allowing server-registered domains, the relay can itself
+  together. In addition to allowing server-registered domains, the relay can itself
   reserve domains to reduce load and ensure uptime of a registered domain.
 
 + The **server** is another daemon that connects to a relay and registers any
