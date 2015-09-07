@@ -1,0 +1,26 @@
+{
+  "name": "woodnsword-registrant",
+  "version": "0.0.1",
+  "description": "Registrant for WooDNSword",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xnil/woodnsword.git"
+  },
+  "keywords": [
+    "dns",
+    "woodnsword",
+    "registrant",
+    "domain",
+    "name"
+  ],
+  "author": "Carter Hinsley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xnil/woodnsword/issues"
+  },
+  "homepage": "https://github.com/xnil/woodnsword#readme"
+}
