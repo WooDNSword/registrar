@@ -1,3 +1,4 @@
 var
-    gulp = require('gulp');
+    coffee = require('gulp-coffee'),
+    gulp   = require('gulp');
 
