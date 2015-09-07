@@ -1,0 +1,11 @@
+{
+    "blacklist": {
+        "addresses": [],
+        "domains": [],
+        "owners" : []
+    },
+    "debug": true,
+    "host": ["samuraimanpurse.com", 55555],
+    "ping interval": 180,
+    "registered domains": []
+}

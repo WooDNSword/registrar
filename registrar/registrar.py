@@ -9,7 +9,7 @@ import socket
 import threading
 import time
 
-f_cfg = open("registrar.cfg")
+f_cfg = open("registrar.json")
 cfg = eval(f_cfg.read())
 f_cfg.close()
 
