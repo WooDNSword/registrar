@@ -1,7 +1,8 @@
 var
-    coffee = require('gulp-coffee'),
-    gulp   = require('gulp'),
-    gutil  = require('gulp-util');
+    coffee     = require('gulp-coffee'),
+    coffeelint = require('gulp-coffeelint'),
+    gulp       = require('gulp'),
+    gutil      = require('gulp-util');
 
 gulp.task('build', [
     'build-coffee',
@@ -22,5 +23,15 @@ gulp.task('build-resources', function () {
 gulp.task('default', function () {
     // Watch for CoffeeScript changes
     gulp.watch('./src/**/*.coffee', ['build-coffee']);
+});
+
+gulp.task('lint', [
+    'lint-coffee'
+]);
+
+gulp.task('lint-coffee', function () {
+    return gulp.src('./src/scripts/**/*.coffee')
+        .pipe(coffeelint())
+        .pipe(coffeelint.reporter());
 });
 
