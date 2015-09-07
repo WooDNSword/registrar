@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/xnil/woodnsword#readme",
   "devDependencies": {
+    "gulp": "^3.9.0",
     "mocha": "^2.3.1"
   }
 }
