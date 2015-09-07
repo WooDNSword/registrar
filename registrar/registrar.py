@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# WooDNSword Relay
-# relay.py
+# WooDNSword Registrar
+# registrar.py
 
 import json
 import random
@@ -9,7 +9,7 @@ import socket
 import threading
 import time
 
-f_cfg = open("relay.cfg")
+f_cfg = open("registrar.cfg")
 cfg = eval(f_cfg.read())
 f_cfg.close()
 
@@ -18,10 +18,10 @@ sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.bind(cfg["host"])
 sock.listen(1)
 
-domains = {}
-servers = {"localhost": set()}
-clients = {}
-threads = {}
+domains     = {}
+registrants = {"localhost": set()}
+clients     = {}
+threads     = {}
 
 def print_status(code, message):
 	print("STATUS %d: %s" % (code, message))
@@ -59,7 +59,7 @@ def add_domains(conn, owner, domain_list, overwrite):
 				result_code = 203
 				result_text = "Address '%s' is blacklisted." % domain_addr
 			elif (domain_name not in domains or overwrite):
-				servers[conn].update({domain_name})
+				registrants[conn].update({domain_name})
 				domains[domain_name] = {"addr": domain_addr, "owner": owner}
 				result_code = 100
 				result_text = "Domain name '%s' -> '%s' successfully claimed." % (domain_name, domain_addr)
@@ -72,7 +72,7 @@ def add_domains(conn, owner, domain_list, overwrite):
 				send(conn, {"type": "status", "code": result_code, "description": result_text})
 		if (cfg["debug"]):
 			print("Domains: %s" % repr(domains))
-			print("Servers: %s" % repr(servers))
+			print("Servers: %s" % repr(registrants))
 
 def handleConnection(conn, addr):
 	running = [True]
@@ -105,8 +105,8 @@ def handleConnection(conn, addr):
 				msg = json.loads(line)
 				if (msg["type"] == "client info"):
 					client_type = msg["client type"]
-					if (client_type == "server"):
-						servers[conn] = set()
+					if (client_type == "registrant"):
+						registrants[conn] = set()
 					if (client_type == "client"):
 						clients[conn] = []
 				elif (msg["type"] == "pong"):
@@ -116,7 +116,7 @@ def handleConnection(conn, addr):
 					print_status(msg["code"], msg["description"])
 				elif (msg["type"] == "quit"):
 					running[0] = False
-				elif (client_type == "server"):
+				elif (client_type == "registrant"):
 					if (msg["type"] == "domain request"):
 						add_domains(conn, addr[0], msg["domains"], False)
 				elif (client_type == "client"):
@@ -126,11 +126,11 @@ def handleConnection(conn, addr):
 						else:
 							send(conn, {"type": "status", "code": 401, "description": "Domain '%s' lookup failed." % msg["domain"]})
 	finally:
-		if conn in servers.keys():
-			for domain in servers[conn]:
+		if conn in registrants.keys():
+			for domain in registrants[conn]:
 				if domain in domains.keys():
 					del domains[domain]
-			del servers[conn]
+			del registrants[conn]
 		if conn in clients:
 			del clients[conn]
 		ping_thread.join()

@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 #
-# WooDNSword Server
-# server.py
+# WooDNSword Registrant
+# registrant.py
 
 import json
 import socket
 
-f_cfg = open("server.cfg")
+f_cfg = open("registrant.cfg")
 cfg = eval(f_cfg.read())
 f_cfg.close()
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(cfg["relay"])
+sock.connect(cfg["registrar"])
 
 def print_status(code, message):
 	print("STATUS %d: %s" % (code, message))
@@ -41,7 +41,7 @@ try:
 				if (not sent_client_info):
 					send({
 						"type": "client info",
-						"client type": "server"})
+						"client type": "registrant"})
 					print("Requesting domains: %s" % ', '.join([("'%s'" % domain[0]) for domain in cfg["domains"]]))
 					send({
 						"type": "domain request",
