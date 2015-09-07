@@ -6,7 +6,7 @@
 import json
 import socket
 
-f_cfg = open("registrant.cfg")
+f_cfg = open("registrant.json")
 cfg = eval(f_cfg.read())
 f_cfg.close()
 

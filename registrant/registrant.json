@@ -1,0 +1,8 @@
+# registrant.json
+
+{
+    "debug": false,
+    "domains": [],
+    "registrar": ["samuraimanpurse.com", 55555]
+}
+
