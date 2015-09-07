@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/xnil/woodnsword/issues"
   },
-  "homepage": "https://github.com/xnil/woodnsword#readme"
+  "homepage": "https://github.com/xnil/woodnsword#readme",
+  "devDependencies": {
+    "mocha": "^2.3.1"
+  }
 }
