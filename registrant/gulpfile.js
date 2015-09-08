@@ -23,6 +23,8 @@ gulp.task('build-resources', function () {
 gulp.task('default', function () {
     // Watch for CoffeeScript changes
     gulp.watch('./src/**/*.coffee', ['build-coffee']);
+    // Watch for resource changes
+    gulp.watch('./src/res/**/*', ['build-resources']);
 });
 
 gulp.task('lint', [
