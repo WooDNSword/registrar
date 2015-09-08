@@ -1,19 +1,14 @@
-net = require 'net'
+net  = require 'net'
+conn = require './connection.js'
 
 HOST = '127.0.0.1'
 PORT = 6810
 
-endpointToString = (host, port) ->
-    # Accept a hostname and a port, then concatenate them together in that
-    # order, joined by a colon.
-    # For example, `endpointToString '127.0.0.1', 8080` will return the string
-    # '127.0.0.1:8080'.
-    host + ':' + port
-
 server = do net.createServer
 
 server.on 'connection', (sock) ->
-    console.log 'CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort
+    console.log 'CONNECTED: ' +
+        conn.endpointToString sock.remoteAddress, sock.remotePort
 
     sock.on 'data', (data) ->
         console.log 'DATA ' + sock.remoteAddress + ': ' + data
@@ -23,4 +18,4 @@ server.on 'connection', (sock) ->
         console.log 'CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort
 
 server.listen PORT, HOST
-console.log 'Registrar listening on ' + endpointToString HOST, PORT
+console.log 'Registrar listening on ' + conn.endpointToString HOST, PORT
