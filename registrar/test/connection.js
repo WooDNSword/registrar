@@ -24,4 +24,30 @@ describe('connection', function () {
             done();
         });
     });
+
+    describe('.stringToEndpoint', function () {
+        it('should produce a valid endpoint object', function (done) {
+            assert.deepEqual(
+                connection.stringToEndpoint(
+                    '127.0.0.1:8080'
+                ),
+                {
+                    host: '127.0.0.1',
+                    port: 8080
+                }
+            );
+
+            assert.deepEqual(
+                connection.stringToEndpoint(
+                    'localhost:6667'
+                ),
+                {
+                    host: 'localhost',
+                    port: 6667
+                }
+            );
+
+            done();
+        });
+    });
 });
