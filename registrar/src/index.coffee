@@ -1,8 +1,9 @@
 net  = require 'net'
 conn = require './connection'
 
-HOST = '127.0.0.1'
-PORT = 6810
+endpoint =
+    host: '127.0.0.1'
+    port: 6810
 
 server = do net.createServer
 
@@ -17,5 +18,5 @@ server.on 'connection', (sock) ->
     sock.on 'close', (data) ->
         console.log 'CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort
 
-server.listen PORT, HOST
-console.log 'Registrar listening on ' + conn.endpointToString HOST, PORT
+server.listen endpoint.port, endpoint.host
+console.log 'Registrar listening on ' + conn.endpointToString endpoint
