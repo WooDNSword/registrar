@@ -9,6 +9,8 @@ character code `0x0A`. For example:
 **Worth noting is that the ASCII character represented by the hex code
 `0x0A` takes the place of the aforementioned placeholder `\n`.**
 
+---
+
 In the case of lengthy messages, the messages will be
 chunked into multiple different messages, like so:
 
@@ -18,6 +20,8 @@ chunked into multiple different messages, like so:
 ...which received concatenated properly would result in:
 
     Message: '{ "type": "foo" }'
+
+---
 
 It sometimes may be the case that multiple messages are sent at once,
 delimited by newline characters, as shown:
