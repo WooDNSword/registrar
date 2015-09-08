@@ -1,5 +1,5 @@
 net  = require 'net'
-conn = require './connection.js'
+conn = require './connection'
 
 HOST = '127.0.0.1'
 PORT = 6810
