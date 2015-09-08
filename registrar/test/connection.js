@@ -49,5 +49,13 @@ describe('connection', function () {
 
             done();
         });
+
+        it('should produce NaN when an invalid port number is provided', function (done) {
+            assert.ok(
+                isNaN(connection.stringToEndpoint('127.0.0.1:invalidPort').port)
+            );
+
+            done();
+        });
     });
 });
