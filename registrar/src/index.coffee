@@ -15,4 +15,3 @@ PORT = 6810
 ).listen PORT, HOST
 
 console.log 'Registrar listening on ' + HOST + ':' + PORT
-
