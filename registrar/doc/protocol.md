@@ -1,6 +1,6 @@
 # WooDNSword Registrar Protocol
 
-### Message format
+## Message format
 All messages are sent as JSON, terminated by a newline character `\n`, or ASCII
 character code `0x0A`. For example:
 
