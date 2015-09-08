@@ -17,7 +17,7 @@ chunked into multiple different messages, like so:
     Message 1: '{ "type": "fo'
     Message 2: 'o" }\n'
 
-...which received concatenated properly would result in:
+...which properly received and concatenated would result in:
 
     Message: '{ "type": "foo" }'
 
