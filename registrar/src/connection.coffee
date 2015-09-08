@@ -6,11 +6,11 @@ exports.endpointToString = (endpoint) ->
     endpoint.host + ':' + endpoint.port
 
 exports.stringToEndpoint = (s) ->
-	# Accepts a string of the format '<host>:<port>', such as '127.0.0.1:8080',
-	# and returns an endpoint object.
-	s_parts = s.split ':'
-	host_tmp = s_parts[0]
-	port_tmp = parseInt s_parts[1]
+    # Accepts a string of the format '<host>:<port>', such as '127.0.0.1:8080',
+    # and returns an endpoint object.
+    s_parts = s.split ':'
+    host_tmp = s_parts[0]
+    port_tmp = parseInt s_parts[1]
 
-	host: host_tmp
-	port: port_tmp
+    host: host_tmp
+    port: port_tmp
