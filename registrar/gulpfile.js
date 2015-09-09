@@ -46,3 +46,9 @@ gulp.task('lint-coffee', function () {
         .pipe(coffeelint.reporter());
 });
 
+gulp.task('lint-coffee-tests', function () {
+    return gulp.src('./test/src/**/*.coffee')
+        .pipe(coffeelint())
+        .pipe(coffeelint.reporter());
+});
+
