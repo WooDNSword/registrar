@@ -11,13 +11,13 @@ gulp.task('build', [
 ]);
 
 gulp.task('build-coffee', function () {
-    gulp.src('./src/**/*.coffee')
+    return gulp.src('./src/**/*.coffee')
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('build-coffee-tests', function () {
-    gulp.src('./test/src/**/*.coffee')
+    return gulp.src('./test/src/**/*.coffee')
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest('./test/dist/'));
 });
