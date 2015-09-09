@@ -6,6 +6,7 @@ var
 
 gulp.task('build', [
     'build-coffee',
+    'build-coffee-tests',
     'build-resources'
 ]);
 
@@ -13,6 +14,12 @@ gulp.task('build-coffee', function () {
     gulp.src('./src/**/*.coffee')
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('build-coffee-tests', function () {
+    gulp.src('./test/src/**/*.coffee')
+        .pipe(coffee({bare: true}).on('error', gutil.log))
+        .pipe(gulp.dest('./test/dist/'))
 });
 
 gulp.task('build-resources', function () {
