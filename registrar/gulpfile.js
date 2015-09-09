@@ -19,7 +19,7 @@ gulp.task('build-coffee', function () {
 gulp.task('build-coffee-tests', function () {
     gulp.src('./test/src/**/*.coffee')
         .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest('./test/dist/'))
+        .pipe(gulp.dest('./test/dist/'));
 });
 
 gulp.task('build-resources', function () {
