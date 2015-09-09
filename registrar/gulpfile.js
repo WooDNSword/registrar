@@ -30,6 +30,8 @@ gulp.task('build-resources', function () {
 gulp.task('default', function () {
     // Watch for CoffeeScript changes
     gulp.watch('./src/**/*.coffee', ['build-coffee']);
+    // Watch for CoffeeScript test changes
+    gulp.watch('./test/src/**/*.coffee', ['build-coffee-tests']);
     // Watch for resource changes
     gulp.watch('./src/res/**/*', ['build-resources']);
 });
