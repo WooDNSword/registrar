@@ -4,7 +4,7 @@
   "description": "Registrar for WooDNSword",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/dist"
   },
   "repository": {
     "type": "git",
