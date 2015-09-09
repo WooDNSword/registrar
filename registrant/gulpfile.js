@@ -37,7 +37,8 @@ gulp.task('default', function () {
 });
 
 gulp.task('lint', [
-    'lint-coffee'
+    'lint-coffee',
+    'lint-coffee-tests'
 ]);
 
 gulp.task('lint-coffee', function () {
