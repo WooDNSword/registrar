@@ -2,7 +2,7 @@ assert = require 'assert'
 conn-util = require '../../dist/connection/util'
 
 describe 'connection/util', ->
-    describe '.endpoint-to-string', ->
+    describe '.endpoint-to-string', (,) ->
         it 'should produce correct output', (done) ->
             assert.equal(
                 conn-util.endpoint-to-string(
@@ -22,7 +22,7 @@ describe 'connection/util', ->
 
             done!
 
-    describe '.string-to-endpoint', ->
+    describe '.string-to-endpoint', (,) ->
         it 'should produce a valid endpoint object', (done) ->
             assert.deepEqual(
                 (conn-util.string-to-endpoint '127.0.0.1:8080'),
