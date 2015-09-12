@@ -5,18 +5,10 @@ endpoint =
     host: \127.0.0.1
     port: 6810
 
-server = net.create-server!
+on-connect = (sock, sock-endpoint) ->
+    console.log 'Hello, world! I am the `on-connect` callback!'
 
-server.on \connection, (sock) ->
-    console.log 'CONNECTED: ' +
-        conn.endpoint-to-string sock.remote-address, sock.remote-port
+on-data = (sock, data) ->
+    console.log 'Hello, world! I am the `on-data` callback!'
 
-    sock.on \data, (data) ->
-        console.log 'DATA ' + sock.remote-address + ': ' + data
-        sock.write 'You said, "' + data + \"
-
-    sock.on 'close', (data) ->
-        console.log 'CLOSED: ' + sock.remote-address + \: + sock.remote-port
-
-server.listen endpoint.port, endpoint.host
-console.log 'Registrar listening on ' + conn.endpoint-to-string endpoint
+conn endpoint, on-connect, on-data
