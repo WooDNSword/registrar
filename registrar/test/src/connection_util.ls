@@ -39,7 +39,7 @@ describe 'connection/util', ->
             done!
 
         it 'should produce NaN when an invalid port number is provided', (done) ->
-            (assert.ok . isNaN) (conn-util.string-to-endpoint '127.0.0.1:invalidPort').port
+            assert.ok . isNaN <| (conn-util.string-to-endpoint '127.0.0.1:invalidPort').port
 
             done!
     
