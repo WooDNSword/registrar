@@ -1,6 +1,6 @@
 # WooDNSword
 
-A free, floating domain name system
+A claim-based, floating domain name system
 
 ### How it works
 
