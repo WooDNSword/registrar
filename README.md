@@ -20,15 +20,15 @@ The WooDNSword backend consists of two separate programs:
   the registrar disconnects, all registered domains are relinquished until they
   are reclaimed.
  
- WooDNSword clients send requests to a registrar for a response containing
- certain information about a domain.
+WooDNSword clients send requests to a registrar for a response containing
+certain information about a domain.
 
- ### What if I want to register a domain name in the traditional way?
+### What if I want to register a domain name in the traditional way?
 
- In order to _reserve_ a domain name by paying a recurring subscription, you
- must successfully claim the domain name using a registrant, with a special flag
- (**TODO: Specify this flag in documentation**) denoting that you wish to apply
- for that domain name's registration. The host of the registrar will approve or
- deny your application at its discretion, and during the time that the domain
- name is reserved it will act as if it were claimed normally; other registrants
- will not be able to claim it.
+In order to _reserve_ a domain name by paying a recurring subscription, you
+must successfully claim the domain name using a registrant, with a special flag
+(**TODO: Specify this flag in documentation**) denoting that you wish to apply
+for that domain name's registration. The host of the registrar will approve or
+deny your application at its discretion, and during the time that the domain
+name is reserved it will act as if it were claimed normally; other registrants
+will not be able to claim it.
