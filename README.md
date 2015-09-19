@@ -2,11 +2,12 @@
 
 [![Join the chat at https://gitter.im/xnil/woodnsword](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xnil/woodnsword?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-A claim-based floating domain name system
+Free, easily customizable domain name registration for dynamic and static IP
+addresses
 
 ### How it works
 
-The WooDNSword backend consists of two separate programs:
+The WooDNSword back-end consists of two separate programs:
 
 + The **registrar** is a daemon that clients and registrants connect to, and
   handles the administration, registration, deregistration, and lookups of all
