@@ -2,7 +2,7 @@
 
 ### Overview
 
-* Fork woodnsword
+* Fork woodnsword-registrar
 * Make one commit for every change you make. Do not try to sneak in
   extra changes.
 * Prefix your commits like so (you may join tags as in `(refactor|doc)
