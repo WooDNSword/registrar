@@ -1,4 +1,4 @@
-# woodnsword-registrar Protocol
+# WooDNSword Protocol
 Application-specific documentation is contained in the corresponding folders.
 
 ## Message format
