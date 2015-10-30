@@ -12,7 +12,7 @@
   body lines to 72 columns.
 * Make a pull request to the appropriate upstream branch. Include a
   thorough description of your changes.
-* Wait for one of the reviewers to look at your code and either merge it
+* Wait for one of the reviewers to look at your PR and either merge it
   or give feedback which you should adapt to.
 
 
