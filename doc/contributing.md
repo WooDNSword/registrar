@@ -3,8 +3,15 @@
 ### Overview
 
 * Fork woodnsword-registrar
+<<<<<<< Updated upstream
 * Make one commit for every change you make. Do not try to sneak in
   extra changes.
+=======
+* Follow Crockford's [Code Conventions for the JavaScript
+  Programming Language](http://javascript.crockford.com/code.html)
+* Make one commit for every atomic change you make. Do not try to sneak
+  in extra changes.
+>>>>>>> Stashed changes
 * Write an thoroughly descriptive commit message for your changes,
   unless absolutely unnecessary (such as when removing accidental extra
   spaces). Wrap your message's subject line to 50 columns, and its body
