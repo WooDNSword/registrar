@@ -1,14 +1,14 @@
 {
   "name": "woodnsword-registrar",
   "version": "0.0.1",
-  "description": "Registrar for WooDNSword",
+  "description": "Registrar daemon for WooDNSword",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha test/dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xnil/woodnsword.git"
+    "url": "git+https://github.com/WooDNSword/woodnsword-registrar.git"
   },
   "keywords": [
     "dns",
@@ -17,18 +17,16 @@
     "domain",
     "name"
   ],
-  "author": "Carter Hinsley",
-  "license": "MIT",
+  "author": "WooDNSword",
+  "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/xnil/woodnsword/issues"
+    "url": "https://github.com/WooDNSword/woodnsword-registrar/issues"
   },
-  "homepage": "https://github.com/xnil/woodnsword#readme",
+  "homepage": "https://github.com/WooDNSword/woodnsword-registrar#readme",
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-lint-ls": "^0.1.0",
     "gulp-livescript": "^2.4.0",
     "gulp-util": "^3.0.6",
-    "livescript": "^1.4.0",
     "mocha": "^2.3.1"
   }
 }

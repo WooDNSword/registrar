@@ -1,1 +1,0 @@
-# WooDNSword Registrant Protocol
