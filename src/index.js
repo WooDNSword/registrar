@@ -1,10 +1,8 @@
-var net  = require('net'),
-    conn = require('./connection');
+var net      = require('net'),
+    conn     = require('./connection'),
+    connUtil = require('./connection/util');
 
-var endpoint = {
-    'host': '127.0.0.1',
-    'port': 6810
-};
+var endpoint = connUtil.stringToEndpoint('127.0.0.1:6810');
 
 function onConnect(sock, sockEndpoint) {
     console.log('Hello, world! I am the `onConnect` callback!');
