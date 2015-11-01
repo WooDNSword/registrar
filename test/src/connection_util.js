@@ -1,4 +1,4 @@
-var assert = require('assert'),
+var assert   = require('assert'),
     connUtil = require('../../dist/connection/util');
 
 describe('connection/util', function () {
