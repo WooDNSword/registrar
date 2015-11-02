@@ -1,12 +1,23 @@
 /**
- * Accept a hostname and a port, then concatenate them together in that order,
- * conjoined by a colon (':'), and return the result.
+ * Accept a hostname and a port, then construct from them an endpoint object,
+ * and return the result.
+ */
+exports.endpoint = function (host, port) {
+	return {
+		'host': host,
+		'port': port
+	};
+};
+
+/**
+ * Accept an endpoint, then concatenate its hostname and port together in that
+ * order, conjoined by a colon (':'), and return the result.
  * 
  * For example, `endpointToString('127.0.0.1', 8080)` will return the string
  * '127.0.0.1:8080'.
  */
 exports.endpointToString = function (endpoint) {
-	return endpoint.host + ':' + endpoint.port;
+	return endpoint.host + ':' + endpoint.port.toString();
 };
 
 /**
