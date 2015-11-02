@@ -7,7 +7,7 @@
  */
 exports.endpointToString = function (endpoint) {
 	return endpoint.host + ':' + endpoint.port;
-}
+};
 
 /**
  * Accept a string of the format '<host>:<port>', such as '127.0.0.1:8080', and
@@ -20,4 +20,4 @@ exports.stringToEndpoint = function (s) {
 		'host': s_parts[0],
 		'port': parseInt s_parts[1]
 	};
-}
+};
