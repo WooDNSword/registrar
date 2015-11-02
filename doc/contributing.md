@@ -2,26 +2,20 @@
 
 ### Overview
 
-* Fork woodnsword-registrar
-* Make one commit for every change you make. Do not try to sneak in
-  extra changes.
-* Prefix your commits like so (you may join tags as in `(refactor|doc)
-  Change documentation conventions`):
-  * (nocompile) Add partially-implemented code
-  * (feature) Add a new feature
-  * (fix) Fixed inconsistent tests
-  * (refactor) ...
-  * (cleanup) ...
-  * (test) ...
-  * (doc) ...
-* Write an exceedingly descriptive commit message for your changes,
+* Fork woodnsword-registrar.
+* Follow Crockford's [Code Conventions for the JavaScript
+  Programming Language](http://javascript.crockford.com/code.html).
+* Make one commit for every atomic change you make. Do not try to sneak
+  in extra changes.
+* Ensure that your commit message's summary line is an imperative
+  sentence with no ending punctuation.
+* Write an thoroughly descriptive commit message for your changes,
   unless absolutely unnecessary (such as when removing accidental extra
-  spaces, but even a typo should include a link to proof of correct
-  spelling). Wrap your message's subject line to 50 columns, and its
-  body lines to 72 columns.
-* Make a pull request with your changes directly to master. Include a
-  description of your changes.
-* Wait for one of the reviewers to look at your code and either merge it
+  spaces). Wrap your message's subject line to 50 columns, and its body
+  lines to 72 columns.
+* Make a pull request to the appropriate upstream branch. Include a
+  thorough description of your changes.
+* Wait for one of the reviewers to look at your PR and either merge it
   or give feedback which you should adapt to.
 
 
