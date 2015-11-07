@@ -1,3 +1,6 @@
+/*
+Package registrar implements the WooDNSword Registrar program.
+*/
 package registrar
 
 import (
