@@ -2,7 +2,7 @@
     "blacklist": {
         "addresses": [],
         "domains": [],
-        "owners" : []
+        "owners": []
     },
     "debug": true,
     "host": ["samuraimanpurse.com", 55555],
