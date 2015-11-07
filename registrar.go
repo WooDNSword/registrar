@@ -1,7 +1,7 @@
 /*
-Package main implements the WooDNSword Registrar program.
+Package registrar implements the WooDNSword Registrar program.
 */
-package main
+package registrar
 
 import (
 	"fmt"
