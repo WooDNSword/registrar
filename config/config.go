@@ -1,6 +1,4 @@
-/*
-Package config contains utilities for dealing with configuration data.
-*/
+// Package config contains utilities for dealing with configuration data.
 package config
 
 import (

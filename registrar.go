@@ -1,6 +1,4 @@
-/*
-Package main implements the WooDNSword Registrar program.
-*/
+// Package main implements the WooDNSword Registrar program.
 package main
 
 import (
