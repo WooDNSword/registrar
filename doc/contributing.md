@@ -12,6 +12,7 @@
   unless absolutely unnecessary (such as when removing accidental extra
   spaces). Wrap your message's subject line to 50 columns, and its body
   lines to 72 columns.
+* Write tests for your code. More info on this coming soon.
 * Make a pull request to the appropriate upstream branch. Include a
   thorough description of your changes.
 * Wait for one of the reviewers to look at your PR and either merge it
