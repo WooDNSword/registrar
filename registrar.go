@@ -14,7 +14,6 @@ func HandleConnection(conn net.Conn) {
 
 func main() {
 	cfg := config.Load("res/json/registrar.json")
-
 	port := cfg.Host.Port
 
 	ln, err := net.Listen("tcp", ":"+port)
@@ -22,6 +21,7 @@ func main() {
 		// Handle error
 	}
 	fmt.Println("Listening on port", port)
+
 	for {
 		conn, err := ln.Accept()
 		if err != nil {

@@ -29,16 +29,13 @@ func Load(path string) Config {
 	var cfg Config
 
 	cfgFile, err := os.Open(path)
-
 	if err != nil {
 		fmt.Println(err)
 		return cfg
 	}
-
 	defer cfgFile.Close()
 
 	dec := json.NewDecoder(cfgFile)
-
 	dec.Decode(&cfg)
 
 	return cfg
