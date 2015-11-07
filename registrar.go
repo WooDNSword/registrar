@@ -8,7 +8,7 @@ import (
 	"net"
 )
 
-func handleConnection(conn net.Conn) {
+func HandleConnection(conn net.Conn) {
 	conn.Write([]byte("Hello, client!"))
 	conn.Close()
 }
@@ -26,6 +26,6 @@ func main() {
 		if err != nil {
 			// Handle error
 		}
-		go handleConnection(conn)
+		go HandleConnection(conn)
 	}
 }
