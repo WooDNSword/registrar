@@ -3,6 +3,8 @@
 ### Overview
 
 * Fork woodnsword-registrar.
+* Follow [Effective Go](https://golang.org/doc/effective_go.html)
+  conventions.
 * Use gofmt!
 * Make one commit for every atomic change you make. Do not try to sneak
   in extra changes.
