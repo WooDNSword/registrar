@@ -18,14 +18,16 @@ func main() {
 
 	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {
-		// Handle error
+		fmt.Println("Oops! Could not listen on port", port)
+		return
 	}
 	fmt.Println("Listening on port", port)
 
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			// Handle error
+			fmt.Println("Connection attempted but could not be accepted")
+			continue
 		}
 		go HandleConnection(conn)
 	}
