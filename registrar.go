@@ -15,7 +15,9 @@ func HandleConnection(conn net.Conn) {
 }
 
 func main() {
-	port := "55555"
+	cfg := config.Load("res/json/registrar.json")
+
+	port := cfg.Host.Port
 
 	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {

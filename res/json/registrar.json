@@ -5,7 +5,10 @@
         "owners": []
     },
     "debug": true,
-    "host": ["samuraimanpurse.com", 55555],
+    "host": {
+        "hostname": "samuraimanpurse.com", 
+        "port": "55555"
+    },
     "ping interval": 180,
     "registered domains": []
 }
