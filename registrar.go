@@ -5,6 +5,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/WooDNSword/registrar/config"
 	"net"
 )
 
