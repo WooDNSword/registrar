@@ -12,10 +12,13 @@ HandleConnection spawns an instance of a supplied `connectionHandler`
 function, which it supplies a net.Conn object `conn` to, and closes the
 connection afterwards to ensure that it gets closed even if
 `connectionHandler` does not close it.
+
+An error object is returned, detailing whether the call to `.Close()` was
+successful.
 */
-func HandleConnection(connectionHandler func(net.Conn), conn net.Conn) {
-	defer conn.Close()
+func HandleConnection(connectionHandler func(net.Conn), conn net.Conn) error {
 	connectionHandler(conn)
+	return conn.Close()
 }
 
 /*
