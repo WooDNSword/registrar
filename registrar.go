@@ -2,8 +2,8 @@
 package main
 
 import (
-	"fmt"
 	"github.com/WooDNSword/registrar/config"
+	"github.com/WooDNSword/registrar/connection"
 	"net"
 )
 
@@ -15,20 +15,6 @@ func HandleConnection(conn net.Conn) {
 func main() {
 	cfg := config.Load("res/json/cfg.json")
 	port := cfg.Host.Port
-
-	ln, err := net.Listen("tcp", ":"+port)
-	if err != nil {
-		fmt.Println("Oops! Could not listen on port", port)
-		return
-	}
-	fmt.Println("Listening on port", port)
-
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			fmt.Println("Connection attempted but could not be accepted")
-			continue
-		}
-		go HandleConnection(conn)
-	}
+	
+	connection.Initiate(port, HandleConnection)
 }
