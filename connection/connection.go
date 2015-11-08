@@ -7,6 +7,9 @@ import (
 	"net"
 )
 
+// Initiate creates a listener on the specified `port` and begins a loop
+// spawning off instances of the supplied function `connectionHandler` for
+// each connection established by the listener.
 func Initiate(port string, connectionHandler func(net.Conn)) {
 	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {
