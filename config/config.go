@@ -1,4 +1,5 @@
 // Package config contains utilities for dealing with configuration data.
+// TODO: Write tests for this package.
 package config
 
 import (
