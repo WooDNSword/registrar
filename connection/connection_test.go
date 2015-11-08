@@ -5,6 +5,38 @@ import (
 	"testing"
 )
 
+func TestHandleConnection(t *testing.T) {
+	// Create two connected net.Conn objects for testing purposes.
+	connA, connB := net.Pipe()
+
+	defer connB.Close()
+
+	connectionHandler := func(conn net.Conn) {
+		// Define a byte array to send over the connection.
+		msg := []byte("Salutations!")
+		// Define a byte array of empty bytes, the same length as `msg`.
+		buf := make([]byte, len(msg))
+
+		// Asynchronously write `msg` to the `conn` connection.
+		go conn.Write(msg)
+		// Block and read from the `connB` connection into the `buf` byte array.
+		connB.Read(buf)
+
+		/*
+			Compare `buf` and `msg`.
+
+			Note: `[]byte` objects cannot be compared, so they must be converted
+			to `string` objects first.
+		*/
+		if string(buf) != string(msg) {
+			t.Error("Message failed to transmit.")
+		}
+	}
+
+	// Run the test.
+	HandleConnection(connectionHandler, connA)
+}
+
 // TestHandleConnectionClose determines whether the call to net.Conn.Close() at
 // the end of HandleConnection performs successfully.
 func TestHandleConnectionClose(t *testing.T) {
