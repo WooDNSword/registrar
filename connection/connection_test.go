@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+// TestHandleConnection determines whether HandleConnection can accept a valid
+// connectionHandler function and call it with the results expected from the
+// design of the connectionHandler function.
 func TestHandleConnection(t *testing.T) {
 	// Create two connected net.Conn objects for testing purposes.
 	connA, connB := net.Pipe()
