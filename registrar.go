@@ -15,6 +15,6 @@ func HandleConnection(conn net.Conn) {
 func main() {
 	cfg := config.Load("res/json/cfg.json")
 	port := cfg.Host.Port
-	
+
 	connection.Initiate(port, HandleConnection)
 }
