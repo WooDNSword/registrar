@@ -4,17 +4,12 @@ package main
 import (
 	"github.com/WooDNSword/registrar/config"
 	"github.com/WooDNSword/registrar/connection"
-	"net"
+	"github.com/WooDNSword/registrar/session"
 )
-
-func HandleConnection(conn net.Conn) {
-	conn.Write([]byte("Hello, client!"))
-	conn.Close()
-}
 
 func main() {
 	cfg := config.Load("res/json/cfg.json")
 	port := cfg.Host.Port
 
-	connection.Initiate(port, HandleConnection)
+	connection.Initiate(port, session.Handler)
 }
