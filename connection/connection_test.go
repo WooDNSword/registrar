@@ -13,7 +13,7 @@ func TestHandleConnectionClose(t *testing.T) {
 
 	// Pass the net.Conn object through an empty function to isolate the
 	// functionality of HandleConnection. Store the return value (an error
-	// object) from  HandleConnection in the variable `err`.
+	// object) from HandleConnection in the variable `err`.
 	err := HandleConnection(func(net.Conn) {}, conn)
 	if err != nil {
 		t.Error(err)
