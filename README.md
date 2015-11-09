@@ -4,3 +4,8 @@
 [![Build Status](https://travis-ci.org/WooDNSword/registrar.svg?branch=go-rewrite)](https://travis-ci.org/WooDNSword/registrar)
 
 We're currently undergoing major refactoring efforts; more info coming soon! 😊
+
+# Documentation
+
+- [WooDNSword Documentation](https://github.com/WooDNSword/woodnsword.github.io/wiki)
+- [WooDNSword Registrar Documentation](https://github.com/WooDNSword/registrar/wiki)
