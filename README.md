@@ -7,5 +7,5 @@ We're currently undergoing major refactoring efforts; more info coming soon! ðŸ˜
 
 # Documentation
 
-- [WooDNSword Documentation](https://github.com/WooDNSword/woodnsword.github.io/wiki)
-- [WooDNSword Registrar Documentation](https://github.com/WooDNSword/registrar/wiki)
+- [WooDNSword Wiki](https://github.com/WooDNSword/woodnsword.github.io/wiki)
+- [WooDNSword Registrar Wiki](https://github.com/WooDNSword/registrar/wiki)
