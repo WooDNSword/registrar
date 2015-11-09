@@ -11,3 +11,9 @@ We're currently undergoing major refactoring efforts; more info coming soon! ðŸ˜
 
 - [WooDNSword Wiki](https://github.com/WooDNSword/woodnsword.github.io/wiki)
 - [WooDNSword Registrar Wiki](https://github.com/WooDNSword/registrar/wiki)
+
+# Statistics
+
+## Throughput
+
+[![Throughput Graph](https://graphs.waffle.io/WooDNSword/registrar/throughput.svg)](https://waffle.io/WooDNSword/registrar/metrics)
