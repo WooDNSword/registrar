@@ -1,7 +1,3 @@
 language: go
 notifications:
   slack: initialabs:fh93InNR1qkaFzjYBBeBIe40
-before_install:
-  - pip install --user codecov
-after_success:
-  - codecov
