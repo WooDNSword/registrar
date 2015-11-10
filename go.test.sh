@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Codecov Golang bash script
+# Pulled from https://github.com/codecov/example-go/blob/master/go.test.sh
+# Except for the addition of this comment block, no changes were made.
+
 set -e
 echo "" > coverage.txt
 
