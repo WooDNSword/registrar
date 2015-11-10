@@ -16,6 +16,10 @@ We're currently undergoing major refactoring efforts; more info coming soon! ðŸ˜
 
 # Statistics
 
+## Code coverage over time
+
+![codecov.io](https://codecov.io/github/WooDNSword/registrar/branch.svg?branch=master)
+
 ## Throughput
 
 [![Throughput Graph](https://graphs.waffle.io/WooDNSword/registrar/throughput.svg)](https://waffle.io/WooDNSword/registrar/metrics)
