@@ -12,6 +12,8 @@ func TestHandleConnection(t *testing.T) {
 	// Create two connected net.Conn objects for testing purposes.
 	connA, connB := net.Pipe()
 
+	// Note: connA.Close() is not called here because it will be called by
+	// HandleConnection.
 	defer connB.Close()
 
 	connectionHandler := func(conn net.Conn) {
