@@ -4,8 +4,7 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
-	"os"
+	"io"
 )
 
 type AccessList struct {
@@ -16,28 +15,36 @@ type Endpoint struct {
 	Hostname, Port string
 }
 
+type Field struct {
+	Name string
+	Value string
+}
+
+type Registration struct {
+	Domain string
+	Fields []Field
+}
+
 type Config struct {
 	Blacklist         AccessList
 	Debug             bool
 	Host              Endpoint
-	PingInterval      uint
-	RegisteredDomains []string
+	PingInterval      uint           `json:"ping interval"`
+	ReservedDomains   []Registration `json:"reserved domains"`
 }
 
-// Load accepts a path to a configuration file and serializes it, returning
-// the resulting struct with type Config.
-func Load(path string) Config {
+/*
+Eval accepts a value of type io.Reader, tries to read all data from it, then
+decodes the data from JSON to a struct `cfg` of type Config.
+
+A tuple containing that struct value `cfg` as well as a value of type `err`,
+denoting whether any issues occurred during decoding, is then returned.
+*/
+func Eval(reader io.Reader) (Config, error) {
 	var cfg Config
-
-	cfgFile, err := os.Open(path)
-	if err != nil {
-		fmt.Println(err)
-		return cfg
-	}
-	defer cfgFile.Close()
-
-	dec := json.NewDecoder(cfgFile)
-	dec.Decode(&cfg)
-
-	return cfg
+	
+	dec := json.NewDecoder(reader)
+	err := dec.Decode(&cfg)
+	
+	return cfg, err
 }
