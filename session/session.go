@@ -13,5 +13,8 @@ function handles connection object closing, so this function should not close
 the connection itself.
 */
 func Handler(conn net.Conn) {
+	// TODO: Develop message format struct type.
+	// TODO: Receive IDENT message and respond with STATUS message.
+	// TODO: Delete the placeholder "Greetings, ..." message.
 	conn.Write([]byte("Greetings, client!"))
 }
