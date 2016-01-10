@@ -3,9 +3,53 @@
 package connection
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net"
 )
+
+// TODO: Move Message struct type to shared repository (exists in registrant
+// codebase as well).
+// TODO: Document Message struct type.
+type Message struct {
+	Type    string
+	Content []string
+}
+
+// TODO: Move Message.ByteString() to shared repository (exists in registrant
+// codebase as well).
+// TODO: Document Message.ByteString().
+func (msg Message) ByteString() []byte {
+	msgJson, err := json.Marshal(msg)
+	if err != nil {
+		panic(err)
+	}
+
+	return msgJson
+}
+
+// TODO: Move Message.Send() to shared repository (exists in registrant codebase
+// as well).
+// TODO: Document Message.Send().
+func (msg Message) Send(conn net.Conn) (int, error) {
+	return conn.Write(msg.ByteString())
+}
+
+// TODO: Move Recv() to shared repository (exists in registrant codebase as
+// well).
+// TODO: Document Recv().
+func Recv(reader io.Reader) Message {
+	var msg Message
+
+	dec := json.NewDecoder(reader)
+	err := dec.Decode(&msg)
+	if err != nil {
+		panic(err)
+	}
+
+	return msg
+}
 
 /*
 HandleConnection spawns an instance of a supplied `connectionHandler`

@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 	"io"
-	"testing"
 	"reflect"
+	"testing"
 )
 
 // TestEval determines whether Eval produces a valid Config object from ad-hoc
@@ -14,15 +14,15 @@ func TestEval(t *testing.T) {
 	var testResult Config
 	var expectedResult Config
 	var err error
-	
+
 	// Define an IO pipe to send/receive data locally
 	reader, writer := io.Pipe()
 	defer reader.Close()
 	defer writer.Close()
-	
+
 	// First test: Determine whether Eval() produces correct results from test
 	// data.
-	
+
 	testData = `
 		{
 			"blacklist": {
@@ -61,13 +61,13 @@ func TestEval(t *testing.T) {
 	expectedResult = Config{
 		Blacklist: AccessList{
 			Addresses: []string{},
-			Domains: []string{},
-			Owners: []string{},
+			Domains:   []string{},
+			Owners:    []string{},
 		},
 		Debug: true,
 		Host: Endpoint{
 			Hostname: "localhost",
-			Port: "7776",
+			Port:     "7776",
 		},
 		PingInterval: 180,
 		ReservedDomains: []Registration{
@@ -75,7 +75,7 @@ func TestEval(t *testing.T) {
 				Domain: "mywebsite.com",
 				Fields: []Field{
 					Field{
-						Name: "address",
+						Name:  "address",
 						Value: "127.0.0.1",
 					},
 				},
@@ -84,7 +84,7 @@ func TestEval(t *testing.T) {
 				Domain: "yourwebsite.com",
 				Fields: []Field{
 					Field{
-						Name: "address",
+						Name:  "address",
 						Value: "1.2.3.4",
 					},
 				},
@@ -92,24 +92,24 @@ func TestEval(t *testing.T) {
 		},
 	}
 	go writer.Write([]byte(testData))
-	
+
 	testResult, err = Eval(reader)
 	if err != nil {
 		t.Error(err)
 	}
-	
+
 	fmt.Printf("%+v\n\n%+v\n", testResult, expectedResult)
-	
+
 	if !reflect.DeepEqual(testResult, expectedResult) {
 		t.Error("Test result does not equal expected result.")
 	}
-	
+
 	// Second test: Determine whether Eval() panics when it receives invalid
 	// test data.
-	
+
 	testData = `blah blah`
 	go writer.Write([]byte(testData))
-	
+
 	_, err = Eval(reader)
 	if err == nil {
 		t.Error("Eval() did not produce an error when expected to.")

@@ -16,7 +16,7 @@ type Endpoint struct {
 }
 
 type Field struct {
-	Name string
+	Name  string
 	Value string
 }
 
@@ -26,11 +26,11 @@ type Registration struct {
 }
 
 type Config struct {
-	Blacklist         AccessList
-	Debug             bool
-	Host              Endpoint
-	PingInterval      uint           `json:"ping interval"`
-	ReservedDomains   []Registration `json:"reserved domains"`
+	Blacklist       AccessList
+	Debug           bool
+	Host            Endpoint
+	PingInterval    uint           `json:"ping interval"`
+	ReservedDomains []Registration `json:"reserved domains"`
 }
 
 /*
@@ -42,9 +42,9 @@ denoting whether any issues occurred during decoding, is then returned.
 */
 func Eval(reader io.Reader) (Config, error) {
 	var cfg Config
-	
+
 	dec := json.NewDecoder(reader)
 	err := dec.Decode(&cfg)
-	
+
 	return cfg, err
 }

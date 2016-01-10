@@ -13,12 +13,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	cfg, err := config.Eval(cfgFile)
 	if err != nil {
 		panic(err)
 	}
-	
+
 	port := cfg.Host.Port
 
 	connection.Initiate(port, session.Handler)
