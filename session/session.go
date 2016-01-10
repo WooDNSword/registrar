@@ -3,6 +3,8 @@
 package session
 
 import (
+	"fmt"
+	"github.com/WooDNSword/registrar/connection"
 	"net"
 )
 
@@ -13,6 +15,14 @@ function handles connection object closing, so this function should not close
 the connection itself.
 */
 func Handler(conn net.Conn) {
-	// TODO: Receive IDENT message and respond with STATUS message.
-	
+	initialMsg := connection.Recv(conn)
+	if initialMsg.Type == "IDENT" && len(initialMsg.Content) > 0 {
+		// TODO: React to IDENT message with identification then respond with
+		// the appropriate STATUS message.
+		// TODO: Remove fmt.Println().
+		fmt.Println(initialMsg.Content[0])
+	} else {
+		// TODO: Respond with the appropriate STATUS message.
+		panic("There's something wrong here. This message is a placeholder.")
+	}
 }
