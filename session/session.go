@@ -3,7 +3,6 @@
 package session
 
 import (
-	"fmt"
 	"github.com/WooDNSword/registrar/connection"
 	"net"
 )
@@ -17,12 +16,33 @@ the connection itself.
 func Handler(conn net.Conn) {
 	initialMsg := connection.Recv(conn)
 	if initialMsg.Type == "IDENT" && len(initialMsg.Content) > 0 {
-		// TODO: React to IDENT message with identification then respond with
-		// the appropriate STATUS message.
-		// TODO: Remove fmt.Println().
-		fmt.Println(initialMsg.Content[0])
+		switch initialMsg.Content[0] {
+		case "registrant":
+			// TODO: React and respond appropriately. This is only a
+			// placeholder response.
+			connection.Message{
+				Type: "STATUS",
+				Content: []string{"10001"},
+			}.Send(conn)
+		case "resolver":
+			// TODO: React and respond appropriately. This is only a
+			// placeholder response.
+			connection.Message{
+				Type: "STATUS",
+				Content: []string{"20001"},
+			}.Send(conn)
+		default:
+			// Client type not recognized.
+			connection.Message{
+				Type: "STATUS",
+				Content: []string{"50001"},
+			}.Send(conn)
+		}
 	} else {
 		// TODO: Respond with the appropriate STATUS message.
-		panic("There's something wrong here. This message is a placeholder.")
+		connection.Message{
+			Type: "STATUS",
+			Content: []string{"50000"},
+		}.Send(conn)
 	}
 }
