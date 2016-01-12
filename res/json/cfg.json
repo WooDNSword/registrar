@@ -7,7 +7,7 @@
     "debug": true,
     "host": {
         "hostname": "samuraimanpurse.com", 
-        "port": "55555"
+        "port": 55555
     },
     "ping interval": 180,
     "registered domains": []
