@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from cfg.read import read_cfg
 import json
 import socket
 import threading
@@ -7,8 +8,28 @@ import threading
 # TODO: Move handle_session to a specialized module.
 # TODO: Document handle_session.
 def handle_session(conn):
-	# TODO: Respond to IDENT message.
-	conn.close()
+	msg = recv_msg(conn)
+	# TODO: Redesign logic flow. Excessive if/elif statements should not be
+	# used. Maybe develop a function for each message type's response?
+	try:
+		if msg['type'] == 'IDENT':
+			if msg['content'][0] == 'registrant':
+				# TODO: React and respond appropriately. This is only a
+				# placeholder message.
+				send_msg(conn, message('STATUS', '10001'))
+			elif msg['content'][0] == 'resolver':
+				# TODO: React and respond appropriately. This is only a
+				# placeholder message.
+				send_msg(conn, message('STATUS', '20001'))
+			else:
+				# Client type not recognized.
+				send_msg(conn, message('STATUS', '50001'))
+		else:
+			raise ValueError('Message type not recognized.')
+	except:
+		send_msg(conn, message('STATUS', '50000'))
+	finally:
+		conn.close()
 
 # TODO: Move message to a specialized module.
 # TODO: Document message.
@@ -17,12 +38,6 @@ def message(msg_type, *msg_content):
 		'type': msg_type,
 		'content': msg_content
 	}
-
-# TODO: Move read_cfg to a specialized module.
-# TODO: Document read_cfg.
-def read_cfg(file_path):
-	with open(file_path) as f:
-		return json.loads(f.read())
 
 # TODO: Move recv_msg to a specialized module.
 # TODO: Document recv_msg.
