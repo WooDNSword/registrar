@@ -10,9 +10,9 @@ def handle_session(conn):
 	# TODO: Respond to IDENT message.
 	conn.close()
 
-# TODO: Move msg to a specialized module.
-# TODO: Document msg.
-def msg(msg_type, *msg_content):
+# TODO: Move message to a specialized module.
+# TODO: Document message.
+def message(msg_type, *msg_content):
 	return {
 		'type': msg_type,
 		'content': msg_content
