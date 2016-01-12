@@ -2,6 +2,13 @@
 
 import json
 import socket
+import threading
+
+# TODO: Move handle_session to a specialized module.
+# TODO: Document handle_session.
+def handle_session(conn):
+	# TODO: Respond to IDENT message.
+	conn.close()
 
 # TODO: Move msg to a specialized module.
 # TODO: Document msg.
@@ -43,14 +50,15 @@ def send_msg(conn, msg_dict):
 
 if __name__ == '__main__':
 	cfg = read_cfg('res/json/cfg.json')
+	
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	# TODO: Change `''` to `cfg['host']['hostname']`.
 	sock.bind(('', cfg['host']['port']))
 	sock.listen(1)
+	
 	while True:
-		# TODO: Spawn off new thread for each incoming connection.
 		conn, addr = sock.accept()
-		print('Client connected: %s' % addr[0])
-		print(recv_msg(conn))
-		# TODO: Respond to IDENT message.
-		conn.close()
+		
+		t = threading.Thread(target=handle_session, args=(conn,))
+		t.daemon=True
+		t.start()
