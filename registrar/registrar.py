@@ -14,6 +14,7 @@ if __name__ == '__main__':
 		) + '/res/json/cfg.json'
 	)
 	
+	# TODO: Move connection stuff into connection module (duh).
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	# TODO: Change `''` to `cfg['host']['hostname']`.
 	sock.bind(('', cfg['host']['port']))
