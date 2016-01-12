@@ -23,3 +23,9 @@ We're currently undergoing major refactoring efforts; more info coming soon! ðŸ˜
 ## Throughput
 
 [![Throughput Graph](https://graphs.waffle.io/WooDNSword/registrar/throughput.svg)](https://waffle.io/WooDNSword/registrar/metrics)
+
+# Usage
+
+```
+./bin/registrar
+```
