@@ -1,4 +1,23 @@
 import json
+import session
+import socket
+import threading
+
+# TODO: Document initiate.
+def initiate(cfg):
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	# TODO: Change `''` to `cfg['host']['hostname']`.
+	sock.bind(('', cfg['host']['port']))
+	sock.listen(1)
+	
+	while True:
+		conn, addr = sock.accept()
+		
+		t = threading.Thread(
+			target=session.handle_session, args=(conn, cfg)
+		)
+		t.daemon=True
+		t.start()
 
 # TODO: Document message.
 def message(msg_type, *msg_content):
