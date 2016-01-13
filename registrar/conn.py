@@ -46,7 +46,7 @@ def recv_msg(conn):
 	json_len = int(json_len_buf)
 	
 	# Retrieve raw JSON string.
-	raw_msg = '{' + conn.recv(json_len)
+	raw_msg = '{' + conn.recv(json_len - 1)
 	
 	# Return decoded JSON object as dict.
 	return json.loads(raw_msg)
