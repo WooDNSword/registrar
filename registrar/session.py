@@ -1,26 +1,78 @@
 import conn
 
-# TODO: Document handle_session.
-def handle_session(sock, cfg):
-	msg = conn.recv_msg(sock)
-	# TODO: Redesign logic flow. Excessive if/elif statements should not be
-	# used. Maybe develop a function for each message type's response?
+registrant_name = 'registrant'
+resolver_name = 'resolver'
+
+# TODO: Document cmd_ident.
+def cmd_ident(globs, locs):
+	client_type = locs['msg']['content'][0]
 	try:
-		if msg['type'] == 'IDENT':
-			if msg['content'][0] == 'registrant':
-				# TODO: React and respond appropriately. This is only a
-				# placeholder message.
-				conn.send_msg(sock, conn.message('STATUS', '10001'))
-			elif msg['content'][0] == 'resolver':
-				# TODO: React and respond appropriately. This is only a
-				# placeholder message.
-				conn.send_msg(sock, conn.message('STATUS', '20001'))
-			else:
-				# Client type not recognized.
-				conn.send_msg(sock, conn.message('STATUS', '50001'))
-		else:
-			raise ValueError('Message type not recognized.')
+		{
+			registrant_name: register_registrant,
+			resolver_name: register_resolver
+		}[client_type](globs, locs)
+	except KeyError:
+		# Client type not recognized.
+		conn.send_msg(locs['sock'], conn.msg('STATUS', '50001'))
+
+# TODO: Document deregister_client.
+def deregister_client(globs, port):
+	try:
+		del globs['clients'][port]
 	except:
-		conn.send_msg(sock, conn.message('STATUS', '50000'))
+		pass
+
+# TODO: Document handle_session.
+def handle_session(globs, locs):
+	try:
+		while True:
+			locs['msg'] = conn.recv_msg(locs['sock'])
+			try:
+				{
+					'IDENT': cmd_ident
+				}[locs['msg']['type']](globs, locs)
+				if locs['msg']['type'] == 'IDENT':
+					cmd_ident(globs, locs)
+				else:
+					raise ValueError('Message type not recognized.')
+			except KeyError:
+				# TODO: Specify actual status code for this error.
+				conn.send_msg(locs['sock'], conn.msg(
+					'STATUS',
+					'Unspecified error: Message type not recognized.'
+				))
+			except:
+				# Undefined error.
+				conn.send_msg(locs['sock'], conn.msg('STATUS', '50000'))
+	except:
+		if globs['cfg']['debug']:
+			print('An error occurred. Perhaps the connection closed?')
 	finally:
-		sock.close()
+		deregister_client(globs, locs['addr']['port'])
+		locs['sock'].close()
+
+# TODO: Document register_client.
+def register_client(globs, port, client_type):
+	globs['clients'][port] = client_type
+
+# TODO: Document register_registrant.
+def register_registrant(globs, locs):
+	# TODO: Add except clause for when not accepting new registrants.
+	try:
+		register_client(globs, locs['addr']['port'], registrant_name)
+		# Success!
+		conn.send_msg(locs['sock'], conn.msg('STATUS', '1000'))
+	except:
+		# Undefined error.
+		conn.send_msg(locs['sock'], conn.msg('STATUS', '10000'))
+
+# TODO: Document register_resolver.
+def register_resolver(globs, locs):
+	# TODO: Add except clause for when not accepting new registrants.
+	try:
+		register_client(globs, locs['addr']['port'], resolver_name)
+		# Success!
+		conn.send_msg(locs['sock'], conn.msg('STATUS', '2000'))
+	except:
+		# Undefined error.
+		conn.send_msg(locs['sock'], conn.msg('STATUS', '20000'))

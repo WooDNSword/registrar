@@ -4,23 +4,32 @@ import socket
 import threading
 
 # TODO: Document initiate.
-def initiate(cfg):
+def initiate(globs):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	# TODO: Change `''` to `cfg['host']['hostname']`.
-	sock.bind(('', cfg['host']['port']))
+	sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+	# TODO: Change `''` to `globs['cfg']['host']['hostname']`.
+	sock.bind(('', globs['cfg']['host']['port']))
 	sock.listen(1)
 	
 	while True:
 		conn, addr = sock.accept()
 		
+		session_locals = {
+			'sock': conn,
+			'addr': {
+				'ip': addr[0],
+				'port': addr[1]
+			}
+		}
+		
 		t = threading.Thread(
-			target=session.handle_session, args=(conn, cfg)
+			target=session.handle_session, args=(globs, session_locals)
 		)
-		t.daemon=True
+		t.daemon = True
 		t.start()
 
-# TODO: Document message.
-def message(msg_type, *msg_content):
+# TODO: Document msg.
+def msg(msg_type, *msg_content):
 	return {
 		'type': msg_type,
 		'content': msg_content

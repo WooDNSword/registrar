@@ -14,4 +14,9 @@ if __name__ == '__main__':
 		) + '/res/json/cfg.json'
 	)
 	
-	conn.initiate(cfg_data)
+	globs = {
+		'cfg': cfg_data,
+		'clients': {}
+	}
+	
+	conn.initiate(globs)
