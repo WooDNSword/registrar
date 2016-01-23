@@ -25,7 +25,7 @@ def initiate(globs):
 		}
 		
 		t = threading.Thread(
-			target=session.handle_session, args=(globs, session_locals)
+			target=session.handleSession, args=(globs, session_locals)
 		)
 		t.daemon = True
 		t.start()
@@ -37,8 +37,8 @@ def msg(msg_type, *msg_content):
 		'content': msg_content
 	}
 
-# TODO: Document recv_msg.
-def recv_msg(conn):
+# TODO: Document recvMsg.
+def recvMsg(conn):
 	# Retrieve JSON content length.
 	json_len_buf = ''
 	char_buf = conn.recv(1)
@@ -54,7 +54,7 @@ def recv_msg(conn):
 	return json.loads(raw_msg)
 
 # TODO: Document send_msg.
-def send_msg(conn, msg_dict):
+def sendMsg(conn, msg_dict):
 	json_content = json.dumps(msg_dict)
 	json_len = len(json_content)
 	conn.sendall(str(json_len) + json_content)

@@ -44,14 +44,14 @@ direction_char = {
 	(network.unidentified_client_name, network.registrar_name): '6'
 }
 
-# TODO: Document Error.
-def Error(
+# TODO: Document error.
+def error(
 	source=None,
 	destination=None,
 	code_class=None,
 	code_name=None
 	):
-	return ConstructStatus(
+	return constructStatus(
 		source=source,
 		destination=destination,
 		code_type='error',
@@ -59,9 +59,9 @@ def Error(
 		code_name=code_name
 	)
 
-# TODO: Document ConstructStatus.
+# TODO: Document constructStatus.
 # Don't call this externally.
-def ConstructStatus(
+def constructStatus(
 	source=None,
 	destination=None,
 	code_type=None,
@@ -77,14 +77,14 @@ def ConstructStatus(
 	
 	return status_code
 
-# TODO: Document Success.
-def Success(
+# TODO: Document success.
+def success(
 	source=None,
 	destination=None,
 	code_class=None,
 	code_name=None
 	):
-	return ConstructStatus(
+	return constructStatus(
 		source=source,
 		destination=destination,
 		code_type='success',

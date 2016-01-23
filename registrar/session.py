@@ -8,111 +8,111 @@
 import conn
 import network
 
-# TODO: Document cmd_ident.
-def cmd_ident(globs, locs):
+# TODO: Document cmdIdent.
+def cmdIdent(globs, locs):
 	client_type = locs['msg']['content'][0]
 	try:
 		{
-			network.registrant_name: register_registrant,
-			network.resolver_name: register_resolver
+			network.registrant_name: registerRegistrant,
+			network.resolver_name: registerResolver
 		}[client_type](globs, locs)
 	except KeyError:
 		# Client type not recognized.
-		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '50001'))
+		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '50001'))
 
-# TODO: Document deregister_client.
-def deregister_client(globs, locs):
+# TODO: Document deregisterClient.
+def deregisterClient(globs, locs):
 	try:
-		del globs['clients'][get_client_port(locs)]
+		del globs['clients'][getClientPort(locs)]
 		del locs['client_type']
 	except:
 		pass
 
-# TODO: Document get_client_ip.
-def get_client_ip(locs):
+# TODO: Document getClientIp.
+def getClientIp(locs):
 	return locs['addr']['ip']
 
-# TODO: Document get_client_port.
-def get_client_port(locs):
+# TODO: Document getClientPort.
+def getClientPort(locs):
 	return locs['addr']['port']
 
-# TODO: Document get_client_sock.
-def get_client_sock(locs):
+# TODO: Document getClientSock.
+def getClientSock(locs):
 	return locs['sock']
 
-# TODO: Document get_client_type.
-def get_client_type(locs):
+# TODO: Document getClientType.
+def getClientType(locs):
 	try:
 		return locs['client_type']
 	except:
 		return network.unidentified_client_name
 
-# TODO: Document handle_session.
-def handle_session(globs, locs):
+# TODO: Document handleSession.
+def handleSession(globs, locs):
 	try:
 		while True:
 			# TODO: Make this shit timeout for fucks' sakes. This is messing up
 			# deregistration because it's not throwing an error when the remote
 			# endpoint closes.
-			locs['msg'] = conn.recv_msg(get_client_sock(locs))
+			locs['msg'] = conn.recvMsg(getClientSock(locs))
 			try:
 				{
-					'IDENT': cmd_ident
+					'IDENT': cmdIdent
 				}[locs['msg']['type']](globs, locs)
 			except KeyError:
 				# Message type not recognized.
-				conn.send_msg(
-					get_client_sock(locs),
+				conn.sendMsg(
+					getClientSock(locs),
 					conn.msg(
 						'STATUS',
-						status_code_class(locs) + 'F001'
+						statusCodeClass(locs) + 'F001'
 					)
 				)
 			except:
 				# Undefined error.
-				conn.send_msg(
-					get_client_sock(locs),
+				conn.sendMsg(
+					getClientSock(locs),
 					conn.msg('STATUS', '50000')
 				)
 	except:
 		if globs['cfg']['debug']:
 			print('An error occurred. Perhaps the connection closed?')
 	finally:
-		deregister_client(globs, locs)
-		get_client_sock(locs).close()
+		deregisterClient(globs, locs)
+		getClientSock(locs).close()
 
-# TODO: Document register_client.
-def register_client(globs, locs, client_type):
-	globs['clients'][get_client_port(locs)] = client_type
+# TODO: Document registerClient.
+def registerClient(globs, locs, client_type):
+	globs['clients'][getClientPort(locs)] = client_type
 	locs['client_type'] = client_type
 
-# TODO: Document register_registrant.
-def register_registrant(globs, locs):
+# TODO: Document registerRegistrant.
+def registerRegistrant(globs, locs):
 	# TODO: Add except clause for when not accepting new registrants.
 	try:
-		register_client(globs, locs, network.registrant_name)
+		registerClient(globs, locs, network.registrant_name)
 		# Success!
-		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '1000'))
+		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '1000'))
 	except:
 		# Undefined error.
-		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '10000'))
+		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '10000'))
 
-# TODO: Document register_resolver.
-def register_resolver(globs, locs):
+# TODO: Document registerResolver.
+def registerResolver(globs, locs):
 	# TODO: Add except clause for when not accepting new registrants.
 	try:
-		register_client(globs, locs, network.resolver_name)
+		registerClient(globs, locs, network.resolver_name)
 		# Success!
-		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '2000'))
+		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '2000'))
 	except:
 		# Undefined error.
-		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '20000'))
+		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '20000'))
 
-# TODO: Document status_code_class.
+# TODO: Document statusCodeClass.
 # TODO: Get rid of this shit and use the status module.
-def status_code_class(locs):
+def statusCodeClass(locs):
 	return {
 		network.registrant_name: '1',
 		network.resolver_name: '2',
 		network.unidentified_client_name: '5'
-	}[get_client_type(locs)]
+	}[getClientType(locs)]
