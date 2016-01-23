@@ -9,6 +9,9 @@
 
 We're currently undergoing major refactoring efforts; more info coming soon! 😊
 
+OH MY GOD I NEED TO REWRITE THIS IN HASKELL, PYTHON IS GETTING SO UNRULY AND I
+CANNOT MANAGE THIS COMPLEXITY WITHOUT A DECENT TYPESYSTEM
+
 # Documentation
 
 - [WooDNSword Wiki](https://github.com/WooDNSword/woodnsword.github.io/wiki)
