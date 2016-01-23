@@ -1,12 +1,10 @@
 # TODO: Document the module!
-# TODO: Clean this shit the hell up. More modules, yo.
 # TODO: Write tests.
 # TODO: Add debug printing.
-# TODO: Move status codes into their own module. We shouldn't be hard-coding
-# them throughout the whole program. They need semantic identifiers.
 
 import conn
 import network
+import status
 
 # TODO: Document cmdIdent.
 def cmdIdent(globs, locs):
@@ -18,7 +16,15 @@ def cmdIdent(globs, locs):
 		}[client_type](globs, locs)
 	except KeyError:
 		# Client type not recognized.
-		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '50001'))
+		conn.sendMsg(getClientSock(locs), conn.msg(
+			'STATUS',
+			status.error(
+				source=network.registrar_name,
+				destination=getClientType(locs),
+				code_class='ident',
+				code_name='client identification type invalid'
+			)
+		))
 
 # TODO: Document deregisterClient.
 def deregisterClient(globs, locs):
@@ -61,19 +67,26 @@ def handleSession(globs, locs):
 				}[locs['msg']['type']](globs, locs)
 			except KeyError:
 				# Message type not recognized.
-				conn.sendMsg(
-					getClientSock(locs),
-					conn.msg(
-						'STATUS',
-						statusCodeClass(locs) + 'F001'
+				conn.sendMsg(getClientSock(locs), conn.msg(
+					'STATUS',
+					status.error(
+						source=network.registrar_name,
+						destination=getClientType(locs),
+						code_class='misc',
+						code_name='message type invalid'
 					)
-				)
+				))
 			except:
 				# Undefined error.
-				conn.sendMsg(
-					getClientSock(locs),
-					conn.msg('STATUS', '50000')
-				)
+				conn.sendMsg(getClientSock(locs), conn.msg(
+					'STATUS',
+					status.error(
+						source=network.registrar_name,
+						destination=getClientType(locs),
+						code_class='misc',
+						code_name='undefined'
+					)
+				))
 	except:
 		if globs['cfg']['debug']:
 			print('An error occurred. Perhaps the connection closed?')
@@ -83,36 +96,40 @@ def handleSession(globs, locs):
 
 # TODO: Document registerClient.
 def registerClient(globs, locs, client_type):
-	globs['clients'][getClientPort(locs)] = client_type
-	locs['client_type'] = client_type
+	try:
+		globs['clients'][getClientPort(locs)] = client_type
+		locs['client_type'] = client_type
+		# Success!
+		# TODO: Change this from 'undefined' to something more semantic.
+		status_message = conn.msg(
+			'STATUS',
+			status.success(
+				source=network.registrar_name,
+				destination=getClientType(locs),
+				code_class='misc',
+				code_name='undefined'
+			)
+		)
+	except:
+		# Undefined error.
+		status_message = conn.msg(
+			'STATUS',
+			status.error(
+				source=network.registrar_name,
+				destination=getClientType(locs),
+				code_class='ident',
+				code_name='undefined'
+			)
+		)
+	finally:
+		conn.sendMsg(getClientSock(locs), status_message)
 
 # TODO: Document registerRegistrant.
 def registerRegistrant(globs, locs):
-	# TODO: Add except clause for when not accepting new registrants.
-	try:
-		registerClient(globs, locs, network.registrant_name)
-		# Success!
-		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '1000'))
-	except:
-		# Undefined error.
-		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '10000'))
+	# TODO: Add 'if' clause for when not accepting new registrants.
+	registerClient(globs, locs, network.registrant_name)
 
 # TODO: Document registerResolver.
 def registerResolver(globs, locs):
-	# TODO: Add except clause for when not accepting new registrants.
-	try:
-		registerClient(globs, locs, network.resolver_name)
-		# Success!
-		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '2000'))
-	except:
-		# Undefined error.
-		conn.sendMsg(getClientSock(locs), conn.msg('STATUS', '20000'))
-
-# TODO: Document statusCodeClass.
-# TODO: Get rid of this shit and use the status module.
-def statusCodeClass(locs):
-	return {
-		network.registrant_name: '1',
-		network.resolver_name: '2',
-		network.unidentified_client_name: '5'
-	}[getClientType(locs)]
+	# TODO: Add 'if' clause for when not accepting new resolvers.
+	registerClient(globs, locs, network.resolver_name)
