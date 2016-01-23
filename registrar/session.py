@@ -5,18 +5,15 @@
 # them throughout the whole program. They need semantic identifiers.
 
 import conn
-
-registrant_name = 'registrant'
-resolver_name = 'resolver'
-unidentified_client_name = 'unidentified'
+import network
 
 # TODO: Document cmd_ident.
 def cmd_ident(globs, locs):
 	client_type = locs['msg']['content'][0]
 	try:
 		{
-			registrant_name: register_registrant,
-			resolver_name: register_resolver
+			network.registrant_name: register_registrant,
+			network.resolver_name: register_resolver
 		}[client_type](globs, locs)
 	except KeyError:
 		# Client type not recognized.
@@ -47,7 +44,7 @@ def get_client_type(locs):
 	try:
 		return locs['client_type']
 	except:
-		return unidentified_client_name
+		return network.unidentified_client_name
 
 # TODO: Document handle_session.
 def handle_session(globs, locs):
@@ -92,7 +89,7 @@ def register_client(globs, locs, client_type):
 def register_registrant(globs, locs):
 	# TODO: Add except clause for when not accepting new registrants.
 	try:
-		register_client(globs, locs, registrant_name)
+		register_client(globs, locs, network.registrant_name)
 		# Success!
 		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '1000'))
 	except:
@@ -103,7 +100,7 @@ def register_registrant(globs, locs):
 def register_resolver(globs, locs):
 	# TODO: Add except clause for when not accepting new registrants.
 	try:
-		register_client(globs, locs, resolver_name)
+		register_client(globs, locs, network.resolver_name)
 		# Success!
 		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '2000'))
 	except:
@@ -111,9 +108,10 @@ def register_resolver(globs, locs):
 		conn.send_msg(get_client_sock(locs), conn.msg('STATUS', '20000'))
 
 # TODO: Document status_code_class.
+# TODO: Get rid of this shit and use the status module.
 def status_code_class(locs):
 	return {
-		registrant_name: '1',
-		resolver_name: '2',
-		unidentified_client_name: '5'
+		network.registrant_name: '1',
+		network.resolver_name: '2',
+		network.unidentified_client_name: '5'
 	}[get_client_type(locs)]
