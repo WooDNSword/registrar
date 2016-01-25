@@ -1,3 +1,0 @@
-#!/bin/sh
-
-$(dirname $0)/../registrar/registrar.py
