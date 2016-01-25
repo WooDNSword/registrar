@@ -1,7 +1,4 @@
-node_modules/
 *.swp
-*~
+.cabal-sandbox/*
+cabal.sandbox.config
 dist/
-test/*.js
-*.sublime-project
-*.sublime-workspace
